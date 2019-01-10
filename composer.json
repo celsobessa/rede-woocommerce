@@ -2,7 +2,7 @@
   "name": "developersrede/woocommerce",
   "description": "Módulo de pagamento Rede para Woocommerce",
   "require": {
-    "php": "^7.2",
+    "php": ">=5.6",
     "developersrede/erede-php": "^3.0",
     "monolog/monolog": "^1.2",
     "ext-json": "*",
