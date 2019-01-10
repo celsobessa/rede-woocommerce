@@ -41,28 +41,17 @@ abstract class WC_Rede_Abstract extends WC_Payment_Gateway
         $order_id = $order->get_id();
 
         if ($this->id === $order->get_payment_method()) {
-            $card_brand = get_post_meta($order_id, '_wc_rede_card_brand', true);
-            $card_brand = $this->get_payment_method_name($card_brand);
-            $installments = get_post_meta($order_id, '_wc_rede_installments', true);
-            $order_id = get_post_meta($order_id, '_wc_rede_order_id', true);
             $tid = get_post_meta($order_id, '_wc_rede_transaction_id', true);
-            $status = get_post_meta($order_id, '_wc_rede_status', true);
+            $authorization_code = get_post_meta($order_id, '_wc_rede_transaction_authorization_code', true);
+            $installments = get_post_meta($order_id, '_wc_rede_transaction_installments', true);
             $last = array_pop($items);
             $items['payment_return'] = array(
                 'label' => 'Payment:',
-                'value' => sprintf('<strong>Order ID</strong>: %s<br /><strong>Transaction Id</strong>: %s<br />',
-                    $order_id, $tid)
+                'value' => sprintf('<strong>Order ID</strong>: %s<br /><strong>Installments</strong>: %s<br /><strong>Transaction Id</strong>: %s<br />',
+                    $order_id, $installments, $tid)
             );
 
-            $items['payment_return']['value'] .= sprintf('<strong>Status</strong>: %s', $status);
-
-            if (method_exists($this, 'get_installment_text')) {
-                $items['payment_method']['value'] .= '<br />';
-                $items['payment_method']['value'] .= '<small>';
-                $items['payment_method']['value'] .= sprintf('%s e %s.', esc_attr($card_brand),
-                    $this->get_installment_text($installments, (float)$order->get_total()));
-                $items['payment_method']['value'] .= '</small>';
-            }
+            $items['payment_return']['value'] .= sprintf('<strong>Autorization Code</strong>: %s', $authorization_code);
 
             $items[] = $last;
         }
