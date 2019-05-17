@@ -14,14 +14,12 @@ Esse módulo utiliza o SDK PHP como dependência. Por isso é importante que, as
 composer install
 ```
 
-Feito isso, basta enviar tudo para o diretório de plugins do WordPress - via ftp ou ssh - mesclando e/ou sobrescrevendo conforme solicitado.
+Também é possível fazer o download da [última release](https://github.com/DevelopersRede/woocommerce/releases/latest). Nesse caso, ela já contém as dependências e o diretório rede-woocommerce pode ser enviado diretamente para sua instalação do WooCommerce.
 
-## Instalação via composer
+# Docker
 
-Também é possível fazer o download direto via composer. Para isso, basta executar:
+Caso esteja desenvolvendo, o módulo contém uma imagem com o WordPress, WooCommerce/Storefront e o módulo da Rede. Tudo o que você precisa fazer é clonar esse repositório e fazer:
 
 ```
-composer require developersrede/woocommerce
+docker-compose up
 ```
-
-Isso fará o download do módulo já com todas as dependências. Se feito diretamente no servidor, bastará fazer a configuração do módulo.
