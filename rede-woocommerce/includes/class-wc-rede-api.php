@@ -8,6 +8,8 @@ class WC_Rede_API
     private $store;
     private $capture = true;
     private $soft_descriptor;
+    private $partner_module;
+    private $partner_gateway;
 
     public function __construct($gateway = null)
     {
@@ -23,11 +25,14 @@ class WC_Rede_API
         $this->gateway = $gateway;
         $this->capture = (bool)$gateway->auto_capture;
         $this->soft_descriptor = $gateway->soft_descriptor;
+        $this->partner_gateway = $gateway->partner_gateway;
+        $this->partner_module = $gateway->partner_module;
         $this->store = new \Rede\Store($pv, $token, $environment);
     }
 
     /**
      * @param $id
+     * @param $amount
      * @param int $installments
      * @param array $credit_card_data
      * @return \Rede\Transaction|StdClass
@@ -53,6 +58,10 @@ class WC_Rede_API
 
         if (!empty($this->soft_descriptor)) {
             $transaction->setSoftDescriptor($this->soft_descriptor);
+        }
+
+        if (!empty($this->partner_module) && !empty($this->partner_gateway)) {
+            $transaction->additional($this->partner_gateway, $this->partner_module);
         }
 
         $transaction = (new \Rede\eRede($this->store, $this->get_logger()))->create($transaction);
