@@ -222,7 +222,11 @@ abstract class WC_Rede_Abstract extends WC_Payment_Gateway
 
     protected function validate_installments($posted, $order_total)
     {
-        if (!isset($posted['rede_credit_installments']) && 1 == $this->installments) {
+        if (!isset($posted['rede_credit_installments'])) {
+            $posted['rede_credit_installments'] = 1;
+        }
+
+        if ($posted['rede_credit_installments'] == 1) {
             return true;
         }
 
@@ -235,7 +239,7 @@ abstract class WC_Rede_Abstract extends WC_Payment_Gateway
             $min_value = $this->get_option('min_parcels_value');
             $max_parcels = $this->get_option('max_parcels_number');
 
-            if ($installments > $max_parcels || ($min_value != 0 && $order_total / $installments < $min_value)) {
+            if ($installments > $max_parcels || (($min_value != 0) && (($order_total / $installments) < $min_value))) {
                 throw new Exception('Número inválido de parcelas');
             }
         } catch (Exception $e) {

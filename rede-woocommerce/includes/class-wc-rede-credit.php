@@ -33,6 +33,9 @@ class WC_Rede_Credit extends WC_Rede_Abstract
         $this->max_parcels_number = $this->get_option('max_parcels_number');
         $this->min_parcels_value = $this->get_option('min_parcels_value');
 
+        $this->partner_module = $this->get_option('module');
+        $this->partner_gateway = $this->get_option('gateway');
+
         $this->debug = $this->get_option('debug');
 
         if ('yes' == $this->debug) {
@@ -260,6 +263,27 @@ class WC_Rede_Credit extends WC_Rede_Abstract
                     '12' => '12x'
                 )
             ),
+
+            'partners' => array(
+                'title' => 'Configuracões para parceiros',
+                'type' => 'title'
+            ),
+            'module' => array(
+                'title' => 'ID Módulo',
+                'type' => 'text',
+                'default' => ''
+            ),
+            'gateway' => array(
+                'title' => 'ID Gateway',
+                'type' => 'text',
+                'default' => ''
+            ),
+
+            'developers' => array(
+                'title' => 'Configuracões para desenvolvedores',
+                'type' => 'title'
+            ),
+
             'debug' => array(
                 'title' => 'Depuração',
                 'type' => 'checkbox',
@@ -294,17 +318,17 @@ class WC_Rede_Credit extends WC_Rede_Abstract
             $label = sprintf('%dx de R$ %.02f', $i, $order_total / $i);
 
             if ($i == 1) {
-                sprintf('R$ %.02f à vista', $order_total);
-            }
-
-            if ($order_total / $i < $min_value) {
-                break;
+                $label = sprintf('R$ %.02f à vista', $order_total);
             }
 
             $installments[] = array(
                 'num' => $i,
                 'label' => $label
             );
+
+            if (($order_total / $i) < $min_value) {
+                break;
+            }
         }
 
         if (count($installments) == 0) {
