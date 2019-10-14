@@ -379,7 +379,7 @@ class WC_Rede_Credit extends WC_Rede_Abstract
             $card_data = array(
                 'card_number' => preg_replace('/[^\d]/', '', $_POST['rede_credit_number']),
                 'card_expiration_month' => $expiration[0],
-                'card_expiration_year' => $expiration[1],
+                'card_expiration_year' => $this->normalize_expiration_year( $expiration[1] ),
                 'card_cvv' => $_POST['rede_credit_cvc'],
                 'card_holder' => $_POST['rede_credit_holder_name']
             );
