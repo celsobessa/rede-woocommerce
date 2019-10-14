@@ -2,6 +2,7 @@
 /**
  * Plugin Name: Rede WooCommerce
  * Plugin URI:        https://github.com/DevelopersRede/woocommerce
+ * GitHub Plugin URI: https://github.com/celsobessa/rede-woocommerce
  * Description: Rede API integration for WooCommerce
  * Version:     1.2.2
  * Requires PHP:      7.1
