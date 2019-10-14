@@ -172,7 +172,6 @@ abstract class WC_Rede_Abstract extends WC_Payment_Gateway
 
     protected function validate_card_fields($posted)
     {
-        $expiry_date = $posted[$this->id . '_expiry'];
 
         try {
             if (!isset($posted[$this->id . '_holder_name']) || '' === $posted[$this->id . '_holder_name']) {
